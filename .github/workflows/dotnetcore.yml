@@ -20,3 +20,24 @@ jobs:
     
     - name: Test with dotnet
       run: dotnet test ./eShopOnWeb.sln --configuration Release
+
+  snyk-security-scan:
+    needs: build
+    runs-on: windows-latest
+    continue-on-error: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      - name: Run Snyk Code Scan for Security Issues
+        run: snyk code test --file=eShopOnWeb.sln
+
+      - name: Run Snyk to check for vulnerabilities
+        run: snyk test --file=eShopOnWeb.sln
