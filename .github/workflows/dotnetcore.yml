@@ -37,4 +37,4 @@ jobs:
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
       - name: Run Snyk to check for vulnerabilities
-        run: snyk test --file=eShopOnWeb.sln
+        run: snyk test --file=eShopOnWeb.sln --dotnet-runtime-resolution
